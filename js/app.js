@@ -13,9 +13,9 @@ var constant = {
 
   //this function is used to test for enemy-player collisions
   colComp: function (x, min, max) {
-    return (x > min && x < max)
+    return (x > min && x < max);
   }
-}
+};
 
 //Random number functions for enemy bugs; generates
 //enemy x,y positions and speed
@@ -26,15 +26,15 @@ var random = {
   xPos: function () {
     return (Math.floor(Math.random() * 2) === 0) ?
       -1 * constant.xUnit - Math.random() * boardConstant :
-      8 * constant.xUnit + Math.random() * boardConstant
+      8 * constant.xUnit + Math.random() * boardConstant;
   },
   yPos: function () {
-    return constant.yOffset + constant.yUnit * Math.floor((Math.random() * 6))
+    return constant.yOffset + constant.yUnit * Math.floor((Math.random() * 6));
   },
   speed: function () {
-    return Math.floor((Math.random() * 400) + 75)
+    return Math.floor((Math.random() * 400) + 75);
   }
-}
+};
 
 //The boardConstant helps make higher levels more playable by
 //increasing the distance each bug has to travel before looping
@@ -50,8 +50,8 @@ reset = function (lvl) {
   for (var i = 0; i < lvl; i++) {
     allEnemies[i] = new Enemy();
   }
-  player = new Player()
-}
+  player = new Player();
+};
 
 //Enemy object
 var Enemy = function () {
@@ -64,7 +64,7 @@ var Enemy = function () {
   this.body = this.x + constant.bugWidth;
   this.y = random.yPos();
   this.speed = random.speed();
-}
+};
 
 //Update enemy position.  The nested 'if' statements test
 //for collisions
@@ -79,7 +79,7 @@ Enemy.prototype.update = function (dt) {
   
   if (this.x < (-2 * constant.xUnit - boardConstant) ||
      (this.x > 9 * constant.xUnit + boardConstant)) {
-        this.x = this.initialState
+        this.x = this.initialState;
   }
   this.body = this.x + constant.bugWidth;
   
@@ -87,17 +87,17 @@ Enemy.prototype.update = function (dt) {
     if (constant.colComp(player.x, this.x, this.body) ||
       constant.colComp(player.body, this.x, this.body)) {
       console.log('ouch!');
-      console.log('You reached level ' + (constant.gamelevel - 5) + '!')
+      console.log('You reached level ' + (constant.gamelevel - 5) + '!');
       constant.gamelevel = 6;
       reset(constant.gamelevel);
     }
   }
-}
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function () {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 //Player object
 var Player = function () {
@@ -126,8 +126,8 @@ var Player = function () {
     default:
       null;
     }
-  }
-}
+  };
+};
 
 //tests if the player has reached the water
 Player.prototype.update = function () {
@@ -136,7 +136,7 @@ Player.prototype.update = function () {
     constant.gamelevel++;
     reset(constant.gamelevel);
   }
-}
+};
 
 //initial game start
 reset(constant.gamelevel);
